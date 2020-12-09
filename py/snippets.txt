@@ -1,0 +1,107 @@
+# ═══════════════════════════════════════════════════════════════════════════════════════╡
+# SQL
+# ═══════════════════════════════════════════════════════════════════════════════════════╡
+
+WITH States AS (
+  SELECT StateID, SUM(LastUpdated) AS LastUpdated FROM States
+  WHERE StateID = 1
+  GROUP BY 1),
+StatesOld AS (
+  SELECT StateID, SUM(LastUpdated) AS LastUpdated FROM StatesOld
+  WHERE StateID = 1
+  GROUP BY 1)
+SELECT 
+  s.StateID, s.LastUpdated AS States, o.LastUpdated AS StatesOld,
+  CASE WHEN o.LastUpdated < s.LastUpdated THEN s.LastUpdated - o.LastUpdated ELSE 0 END AS total
+FROM States s
+JOIN StatesOld o ON o.StateID = s.StateID
+
+SELECT a.StateName
+, a.new_case_total
+, b.old_case_total
+, a.new_case_total - b.old_case_total AS difference
+FROM (SELECT StateName, SUM(ConfirmedCases) AS new_case_total FROM States
+GROUP BY StateName ) AS a 
+LEFT OUTER JOIN (SELECT StateName, SUM(ConfirmedCases) AS old_case_total FROM StatesOld
+GROUP BY StateName ) AS b
+ON b.StateName = a.StateName
+
+SELECT a.StateName
+     , a.new_death_total
+     , b.old_death_total
+     , a.new_death_total - b.old_death_total AS difference
+FROM (SELECT StateName, SUM(ConfirmedDeaths) AS new_death_total FROM States
+GROUP BY StateName ) AS a 
+LEFT OUTER JOIN (SELECT StateName, SUM(ConfirmedDeaths) AS old_death_total FROM StatesOld
+GROUP BY StateName ) AS b
+    ON b.StateName = a.StateName
+
+
+
+
+CREATE TABLE States (
+   StateID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   StateName VARCHAR(20) NOT NULL,
+   ConfirmedCases INTEGER NOT NULL,
+   ConfirmedDeaths INTEGER NOT NULL,
+   LastUpdated INTEGER NOT NULL
+   ) AUTO_INCREMENT = 1;
+
+CREATE TABLE Homepage (
+   HomepageID INTEGER NOT NULL,
+   UserID VARCHAR(50) NOT NULL,
+   StateID INTEGER NOT NULL,
+   CountryID INTEGER NOT NULL,
+   LastUpdated INTEGER NOT NULL,
+   PRIMARY KEY (HomepageID),
+   FOREIGN KEY (UserID) REFERENCES User (UserID)
+   ) AUTO_INCREMENT = 1;
+
+ALTER TABLE Homepage
+  MODIFY UserID varchar(50);
+
+INSERT INTO Homepage(IPAddress) VALUES ('10.0.0.66');
+
+CREATE TABLE User (
+   UserID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   IPAddress VARCHAR(50) NOT NULL,
+   StateID INTEGER
+   ) AUTO_INCREMENT = 1;
+
+INSERT INTO User(IPAddress) VALUES ('10.0.0.66');
+
+CREATE TABLE County  (
+   CountyID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   CountyName VARCHAR(20) NOT NULL,
+   ConfirmedCases INTEGER NOT NULL,
+   ConfirmedDeaths INTEGER NOT NULL,
+   LastUpdated INTEGER NOT NULL
+   ) AUTO_INCREMENT = 1;
+
+CREATE TABLE Country  (
+   CountryID INTEGER AUTO_INCREMENT PRIMARY KEY,
+   CountryName VARCHAR(20),
+   Cases INTEGER,
+   Deaths INTEGER,
+   Recovered INTEGER,
+   Unresolved INTEGER,
+   LastUpdated INTEGER
+   ) AUTO_INCREMENT = 1;
+
+CREATE TABLE testing LIKE States;
+INSERT INTO testing SELECT * FROM States;
+
+INSERT INTO Country (CountryName) VALUES
+('USA');
+
+INSERT INTO User (IPAddress) VALUES
+('USA');
+
+ALTER TABLE Homepage
+  ADD FOREIGN KEY (`UserID`);
+
+ALTER TABLE Homepage
+ADD CONSTRAINT FK_ActiveDirectories_UserID FOREIGN KEY (UserID)
+    REFERENCES ActiveDirectories(id);
+
+SELECT * FROM States WHERE StateName = 'New york';

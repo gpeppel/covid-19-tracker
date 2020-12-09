@@ -1,0 +1,111 @@
+footer img{
+                width: 100%;
+                height:auto;
+            }
+            #overlay {
+              position: fixed; /* Sit on top of the page content */
+              display: none; /* Hidden by default */
+              width: 100%; /* Full width (cover the whole page) */
+              height: 100%; /* Full height (cover the whole page) */
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+              z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+              cursor: pointer; /* Add a pointer on hover */
+            }
+
+            #panel {
+                  position: absolute;
+                  padding-top:30px;
+                  padding-right:20px;
+                  padding-left:20px;
+                  top:0;
+                  right:0;
+                  z-index:10;
+                  width: 20%;
+                  height: 100%;
+                  background-color: #ffffff;
+                  overflow: scroll;
+            }
+
+            #panel  a{color:black;display:block;font-size:25px;padding:8px 8px 8px 32px;text-decoration:none;transition:.3s;}
+            #panel a:hover,.offcanvas a:focus{color:#f1f1f1;}
+
+            #vidContainer {
+                  position: absolute;
+                  z-index:10;
+                  width:80%;
+                  height:100%;
+                  background-color:black;
+            }
+
+            #video{
+                  width:100%;
+                  height:100%;
+            }
+            .first_photo{
+                padding-top: 50px;
+                padding-bottom: 10px;
+                padding-left: 10px;
+                padding-right: 30px;
+                width: 100%;
+                height: auto;
+            }
+            .photo{
+                padding: 10px 10px 10px 10px;
+                width:100%;
+                height:auto;
+            }
+            .hidebtn {
+                  z-index: 100;
+                  font-size: 46px;
+                  margin-left:50px;
+                  position: absolute;
+                  right: 25px;
+                  top:0;
+            }
+            #logo{
+                padding-top:20px;
+                
+            }
+            h2{
+                font-size:16px;
+                color:#000000;
+            }
+            #sideHeading{
+                padding-top: 50px;
+            }
+            .img-container{
+                position: relative;
+                
+                overflow:hidden;
+                padding-right:20px;
+            }
+            .tags{
+                position: absolute;
+                
+                left:5px;
+                bottom:10px;
+                height:auto;
+                width:100%;
+            }
+            .tag{
+                height:20%;
+                width:20%;
+                padding-left:1.5%;
+                padding-right:.5%;
+            }
+            #logout{
+                position:fixed;
+                top:0;
+                right:1%;
+            }
+            #modeblue{
+                position:fixed;
+                top:0;
+                right:5%;
+            }
+            
+        </style>
